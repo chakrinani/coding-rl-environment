@@ -1,0 +1,35 @@
+id: webhook-signature-verifier
+title: Fix broken webhook signature verification
+version: "1.0"
+difficulty: medium
+category: backend-debugging
+tags:
+  - webhooks
+  - hmac
+  - api-security
+  - flask
+  - python
+
+capability_tested: >
+  Repository-level debugging: trace a failing webhook integration across multiple
+  modules, identify why valid provider signatures are rejected, and fix verification
+  without breaking idempotent event processing.
+
+estimated_time_minutes: 45
+
+starting_state: environment/repo
+verifier: tests/
+reference_solution: solution/
+
+environment:
+  runtime: docker
+  language: python
+  framework: flask
+  python_version: "3.11"
+
+success_criteria:
+  - Valid signed webhook payloads are accepted with HTTP 200
+  - Tampered payloads are rejected with HTTP 401
+  - Invalid or missing signatures are rejected
+  - Idempotent event processing remains correct
+  - Health endpoint continues to work
